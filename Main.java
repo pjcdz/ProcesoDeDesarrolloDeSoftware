@@ -58,7 +58,7 @@ public class Main {
             for (Actividad actividad : actividades) {
                 boolean puedeHacer = membresias[i].podesHacer(actividad);
                 String resultado = puedeHacer ? "✓ SÍ" : "✗ NO";
-                System.out.println(actividad.getNombre() + " (" + actividad.getTipo() + "): " + resultado);
+                System.out.println(actividad.getNombre() + " (" + actividad.getTipoActividad() + "): " + resultado);
             }
             System.out.println();
         }

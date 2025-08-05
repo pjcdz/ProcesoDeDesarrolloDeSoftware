@@ -6,12 +6,12 @@ public class MembresiaPorTipoDeActividad extends Membresia {
         this.tipo = tipo;
     }
 
-    public String getTipo() {
+    public String getTipoMembresia() {
         return tipo;
     }
 
     @Override
     public boolean podesHacer(Actividad actividad) {
-        return actividad.getTipo().equals(tipo);
+        return actividad.getTipoActividad().equals(getTipoMembresia());
     }
 }

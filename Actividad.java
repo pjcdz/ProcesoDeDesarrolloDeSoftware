@@ -13,11 +13,7 @@ public abstract class Actividad {
         return nombre;
     }
 
-    public String getTipo() {
+    public String getTipoActividad() {
         return tipo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 }

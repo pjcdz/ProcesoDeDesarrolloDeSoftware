@@ -11,13 +11,13 @@ public class MembresiaDePrueba extends Membresia {
         return cantidadMaxima;
     }
 
-    public String getTipo() {
+    public String getTipoMembresia() {
         return tipo;
     }
 
     @Override
     public boolean podesHacer(Actividad actividad) {
-        return getCantidadMaxima() > 0 && actividad.getTipo().equals(tipo); 
+        return getCantidadMaxima() > 0 && actividad.getTipoActividad().equals(getTipoMembresia()); 
         // puede realizar la actividad si aún no ha alcanzado el límite y es del tipo correcto
     }
 }
