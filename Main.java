@@ -1,3 +1,9 @@
+/**
+ * Clase principal para probar el sistema de membresías y actividades.
+ * 
+ * Este programa demuestra el uso de diferentes tipos de membresías
+ * y cómo cada una puede acceder a distintos tipos de actividades.
+ */
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== SISTEMA DE MEMBRESÍAS Y ACTIVIDADES ===\n");
@@ -52,7 +58,7 @@ public class Main {
             for (Actividad actividad : actividades) {
                 boolean puedeHacer = membresias[i].podesHacer(actividad);
                 String resultado = puedeHacer ? "✓ SÍ" : "✗ NO";
-                System.out.println(actividad.nombre + " (" + actividad.getTipo() + "): " + resultado);
+                System.out.println(actividad.getNombre() + " (" + actividad.getTipo() + "): " + resultado);
             }
             System.out.println();
         }
@@ -85,116 +91,6 @@ public class Main {
         System.out.println("¿Puede hacer cualquier actividad? " + (membresia3Actividades.podesHacer(spinning) ? "SÍ" : "NO"));
         System.out.println("Cantidad máxima permitida: " + membresia3Actividades.getCantidadMaxima());
         System.out.println();
-    }
-}
-
-abstract class Membresia {
-    int id;
-    int dni;
-
-    public Membresia(int id, int dni) {
-      this.id = id;
-      this.dni = dni;
-    }
-
-    public abstract boolean podesHacer(Actividad actividad);
-}
-
-abstract class Actividad {
-    String nombre;
-    String tipo;
-    String descripcion;
-
-    public Actividad(String nombre, String tipo, String descripcion) {
-      this.nombre = nombre;
-      this.tipo = tipo;
-      this.descripcion = descripcion;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-}
-
-class ActividadCardio extends Actividad {
-    public ActividadCardio(String nombre, String descripcion) {
-      super(nombre, "Cardio", descripcion);
-    }
-}
-
-class ActividadDeportiva extends Actividad {
-    public ActividadDeportiva(String nombre, String descripcion) {
-      super(nombre, "Deportiva", descripcion);
-    }
-}
-
-class ActividadPileta extends Actividad {
-    public ActividadPileta(String nombre, String descripcion) {
-      super(nombre, "Pileta", descripcion);
-    }
-}
-
-class MembresiaFull extends Membresia {
-
-    public MembresiaFull(int id, int dni) {
-        super(id, dni);
-    }
-
-    @Override
-    public boolean podesHacer(Actividad actividad) {
-        return true; // puede realizar cualquier actividad
-    }
-}
-
-class MembresiaPorTipoDeActividad extends Membresia {
-    private String tipo;
-
-    public MembresiaPorTipoDeActividad(int id, int dni, String tipo) {
-        super(id, dni);
-        this.tipo = tipo;
-    }
-
-    @Override
-    public boolean podesHacer(Actividad actividad) {
-        return actividad.getTipo().equals(tipo);
-    }
-}
-
-class MembresiaPorCantidadDeActividades extends Membresia {
-    private int cantidadMaxima;
-
-    public MembresiaPorCantidadDeActividades(int id, int dni, int cantidadMaxima) {
-        super(id, dni);
-        this.cantidadMaxima = cantidadMaxima;
-    }
-
-    public int getCantidadMaxima() {
-        return cantidadMaxima;
-    }
-
-    @Override
-    public boolean podesHacer(Actividad actividad) {
-        return getCantidadMaxima() > 0; // puede realizar la actividad si aún no ha alcanzado el límite
-    }
-}
-
-class MembresiaDePrueba extends Membresia {
-    private int cantidadMaxima = 1;
-    private String tipo;
-
-    public MembresiaDePrueba(int id, int dni, String tipo) {
-        super(id, dni);
-        this.tipo = tipo;
-    }
-
-    public int getCantidadMaxima() {
-        return cantidadMaxima;
-    }
-
-    @Override
-    public boolean podesHacer(Actividad actividad) {
-        return getCantidadMaxima() > 0 && actividad.getTipo().equals(tipo); 
-        // puede realizar la actividad si aún no ha alcanzado el límite y es del tipo correcto
     }
 }
 
