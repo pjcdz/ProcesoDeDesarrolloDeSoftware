@@ -1,8 +1,7 @@
-public class MembresiaPorCantidadDeActividades extends Membresia {
+public class MembresiaPorCantidadDeActividades implements Membresia {
     private int cantidadMaxima;
 
-    public MembresiaPorCantidadDeActividades(int id, int dni, int cantidadMaxima) {
-        super(id, dni);
+    public MembresiaPorCantidadDeActividades(int cantidadMaxima) {
         this.cantidadMaxima = cantidadMaxima;
     }
 

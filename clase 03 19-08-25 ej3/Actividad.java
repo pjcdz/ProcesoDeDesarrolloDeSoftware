@@ -1,4 +1,4 @@
-public abstract class Actividad {
+public class Actividad {
     protected String nombre;
     protected String tipo;
     protected String descripcion;

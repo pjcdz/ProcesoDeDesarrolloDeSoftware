@@ -1,8 +1,7 @@
-public class MembresiaPorTipoDeActividad extends Membresia {
+public class MembresiaPorTipoDeActividad implements Membresia {
     private String tipo;
 
-    public MembresiaPorTipoDeActividad(int id, int dni, String tipo) {
-        super(id, dni);
+    public MembresiaPorTipoDeActividad(String tipo) {
         this.tipo = tipo;
     }
 

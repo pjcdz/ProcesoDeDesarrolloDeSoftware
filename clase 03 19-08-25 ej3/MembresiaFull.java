@@ -1,8 +1,4 @@
-public class MembresiaFull extends Membresia {
-
-    public MembresiaFull(int id, int dni) {
-        super(id, dni);
-    }
+public class MembresiaFull implements Membresia {
 
     @Override
     public boolean podesHacer(Actividad actividad) {

@@ -1,9 +1,8 @@
-public class MembresiaDePrueba extends Membresia {
+public class MembresiaDePrueba implements Membresia {
     private int cantidadMaxima = 1;
     private String tipo;
 
-    public MembresiaDePrueba(int id, int dni, String tipo) {
-        super(id, dni);
+    public MembresiaDePrueba(String tipo) {
         this.tipo = tipo;
     }
 
