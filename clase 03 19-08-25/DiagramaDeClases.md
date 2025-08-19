@@ -23,13 +23,7 @@ classDiagram
         +int importeConDescuentoPara(Producto unProducto)
     }
     
-    class Main {
-        +static void main(String[] args)
-    }
-    
-    CuponDescuento --> Producto : aplica descuento a
-    Main ..> Producto : crea
-    Main ..> CuponDescuento : crea
+    CuponDescuento --> Producto : usa
 ```
 
 ## Descripción de las Clases
@@ -54,16 +48,9 @@ classDiagram
   - `CuponDescuento(String id, int porcentaje, int monto, int modo)`: Constructor
   - `importeConDescuentoPara(Producto unProducto)`: Calcula el precio con descuento
 
-### Clase `Main`
-- **Propósito**: Clase principal que ejecuta el programa de ejemplo
-- **Métodos**:
-  - `main(String[] args)`: Punto de entrada del programa
-
 ## Relaciones
 
-1. **CuponDescuento → Producto**: La clase `CuponDescuento` tiene una dependencia con `Producto` ya que necesita un objeto `Producto` para calcular el descuento
-2. **Main ⇢ Producto**: La clase `Main` crea instancias de `Producto`
-3. **Main ⇢ CuponDescuento**: La clase `Main` crea instancias de `CuponDescuento`
+1. **CuponDescuento → Producto**: La clase `CuponDescuento` usa la clase `Producto` para calcular descuentos
 
 ## Ejemplo de Uso
 
