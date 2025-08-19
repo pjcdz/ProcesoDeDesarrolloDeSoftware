@@ -7,44 +7,95 @@ Sistema de productos con cupones de descuento refactorizado usando el patrón St
 
 ```mermaid
 classDiagram
-    class Producto {
-        -String descripcion
-        -int precioDeLista
-        +Producto(String desc, int precio)
-        +int getPrecioDeLista()
-    }
-    
-    class CuponDescuento {
-        -String id
-        -int porcentaje
-        -int monto
-        -int modo
-        -EstrategiaDescuento estrategia
-        +CuponDescuento(String id, int porcentaje, int monto, int modo)
-        +int importeConDescuentoPara(Producto unProducto)
-    }
-    
-    class EstrategiaDescuento {
-        <<interface>>
-        +int calcularDescuento(Producto producto)
-    }
-    
-    class DescuentoPorPorcentaje {
-        -int porcentaje
-        +DescuentoPorPorcentaje(int porcentaje)
-        +int calcularDescuento(Producto producto)
-    }
-    
-    class DescuentoPorMonto {
-        -int monto
-        +DescuentoPorMonto(int monto)
-        +int calcularDescuento(Producto producto)
-    }
-    
-    CuponDescuento --> EstrategiaDescuento : usa
-    EstrategiaDescuento --> Producto : calcula sobre
-    DescuentoPorPorcentaje ..|> EstrategiaDescuento : implementa
-    DescuentoPorMonto ..|> EstrategiaDescuento : implementa
+direction LR
+
+class CuponDescuento {
+  - EstrategiaDescuento estrategia
+  - String id
+  - int porcentaje
+  - int monto
+  - int modo
+  + CuponDescuento(id, porcentaje, monto, modo)
+  + importeConDescuentoPara(Producto producto)
+}
+
+class EstrategiaDescuento {
+  <<interface>>
+  + calcularDescuento(Producto producto) int
+}
+
+class DescuentoPorPorcentaje {
+  - int porcentaje
+  + DescuentoPorPorcentaje(int porcentaje)
+  + calcularDescuento(Producto producto) int
+}
+
+class DescuentoPorMonto {
+  - int monto
+  + DescuentoPorMonto(int monto)
+  + calcularDescuento(Producto producto) int
+}
+
+class Producto {
+  - String descripcion
+  - int precioDeLista
+  + Producto(String desc, int precio)
+  + getPrecioDeLista() int
+}
+
+class Main
+
+%% Relaciones principales del Strategy Pattern
+CuponDescuento o-- EstrategiaDescuento : mantiene
+EstrategiaDescuento <|.. DescuentoPorPorcentaje : implementa
+EstrategiaDescuento <|.. DescuentoPorMonto : implementa
+Main ..> CuponDescuento : crea/usa
+Main ..> DescuentoPorPorcentaje : crea internamente
+Main ..> DescuentoPorMonto : crea internamente
+CuponDescuento --> EstrategiaDescuento : estrategia.calcularDescuento(producto)
+EstrategiaDescuento --> Producto : opera sobre
+
+%% Notas explicativas del patrón
+note left of CuponDescuento
+1) CuponDescuento (Context) mantiene una 
+   referencia a EstrategiaDescuento y solo 
+   se comunica vía la interfaz.
+end note
+
+note right of EstrategiaDescuento
+2) EstrategiaDescuento declara el método 
+   calcularDescuento() que CuponDescuento invoca.
+end note
+
+note right of DescuentoPorPorcentaje
+3) Las estrategias concretas implementan
+   diferentes algoritmos de descuento.
+end note
+
+note left of CuponDescuento
+4) CuponDescuento delega: 
+   estrategia.calcularDescuento(producto)
+   sin conocer la implementación concreta.
+end note
+
+note left of Main
+5) Main crea el CuponDescuento que internamente
+   selecciona la estrategia según el 'modo'.
+   La estrategia se puede cambiar creando 
+   un nuevo cupón.
+end note
+
+%% Ejemplo de uso
+note bottom of Main
+// Ejemplo de uso actual:
+cupon10off = new CuponDescuento("2d33s", 10, 0, 1)
+// Internamente crea DescuentoPorPorcentaje(10)
+
+cupon20000 = new CuponDescuento("2d33s", 0, 20000, 2) 
+// Internamente crea DescuentoPorMonto(20000)
+
+precioConDescuento = cupon10off.importeConDescuentoPara(producto)
+end note
 ```
 
 ## Descripción de las Clases
