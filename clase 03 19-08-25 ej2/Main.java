@@ -59,14 +59,17 @@ class CuponDescuento {
         this.monto = monto;
         this.modo = modo;
         
-        // Factory pattern para crear la estrategia apropiada
-        if (modo == 1) {
-            this.estrategia = new DescuentoPorPorcentaje(porcentaje);
-        } else if (modo == 2) {
-            this.estrategia = new DescuentoPorMonto(monto);
-        } else {
-            throw new IllegalArgumentException("Modo de descuento no válido");
-        }
+        // Factory method polimórfico
+        this.estrategia = crearEstrategia(modo, porcentaje, monto);
+    }
+    
+    // Factory method que usa polimorfismo - cada modo es una "clase" de comportamiento
+    private EstrategiaDescuento crearEstrategia(int modo, int porcentaje, int monto) {
+        return switch (modo) {
+            case 1 -> new DescuentoPorPorcentaje(porcentaje);
+            case 2 -> new DescuentoPorMonto(monto);
+            default -> throw new IllegalArgumentException("Modo de descuento no válido: " + modo);
+        };
     }
     
     public int importeConDescuentoPara(Producto unProducto) {
