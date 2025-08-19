@@ -1,3 +1,37 @@
+// Strategy Interface
+interface EstrategiaDescuento {
+    int calcularDescuento(Producto producto);
+}
+
+// Estrategia concreta para descuento por porcentaje
+class DescuentoPorPorcentaje implements EstrategiaDescuento {
+    private final int porcentaje;
+    
+    public DescuentoPorPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+    
+    @Override
+    public int calcularDescuento(Producto producto) {
+        int precioBase = producto.getPrecioDeLista();
+        return precioBase - (precioBase * porcentaje / 100);
+    }
+}
+
+// Estrategia concreta para descuento por monto fijo
+class DescuentoPorMonto implements EstrategiaDescuento {
+    private final int monto;
+    
+    public DescuentoPorMonto(int monto) {
+        this.monto = monto;
+    }
+    
+    @Override
+    public int calcularDescuento(Producto producto) {
+        return producto.getPrecioDeLista() - monto;
+    }
+}
+
 class Producto {
     private String descripcion;
     private int precioDeLista;
@@ -17,24 +51,26 @@ class CuponDescuento {
     private final int porcentaje;
     private final int monto;
     private final int modo; // 1: por porcentaje 2: por monto
+    private final EstrategiaDescuento estrategia;
     
     CuponDescuento(String id, int porcentaje, int monto, int modo) {
         this.id = id;
         this.porcentaje = porcentaje;
         this.monto = monto;
         this.modo = modo;
+        
+        // Factory pattern para crear la estrategia apropiada
+        if (modo == 1) {
+            this.estrategia = new DescuentoPorPorcentaje(porcentaje);
+        } else if (modo == 2) {
+            this.estrategia = new DescuentoPorMonto(monto);
+        } else {
+            throw new IllegalArgumentException("Modo de descuento no válido");
+        }
     }
     
     public int importeConDescuentoPara(Producto unProducto) {
-        int precioConDescuento = unProducto.getPrecioDeLista();
-        if (modo == 1) { // por porcentaje
-            precioConDescuento = precioConDescuento - 
-                precioConDescuento * porcentaje / 100;
-        }
-        if (modo == 2) { // por monto
-            precioConDescuento = precioConDescuento - monto;
-        }
-        return precioConDescuento;
+        return estrategia.calcularDescuento(unProducto);
     }
 }
 
